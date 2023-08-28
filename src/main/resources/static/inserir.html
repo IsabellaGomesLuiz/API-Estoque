@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inserir Produto</title>
+</head>
+<body>
+
+<h2>Inserir Produto</h2>
+
+<form id="produtoForm">
+    <label for="nome">Nome do Produto:</label><br>
+    <input type="text" id="nome" name="nome" required><br><br>
+
+    <label for="descricao">Descrição do Produto:</label><br>
+    <textarea id="descricao" name="descricao" required></textarea><br><br>
+
+    <label for="preco">Preço do Produto:</label><br>
+    <input type="number" id="preco" name="preco" step="0.01" required><br><br>
+
+    <label for="quantidadeEstoque">Quantidade em Estoque:</label><br>
+    <input type="number" id="quantidadeEstoque" name="quantidadeEstoque" required><br><br>
+
+    <button type="button" onclick="inserirProduto()">Inserir Produto</button>
+</form>
+
+<script>
+    function inserirProduto() {
+        var nome = document.getElementById("nome").value;
+        var descricao = document.getElementById("descricao").value;
+        var preco = parseFloat(document.getElementById("preco").value);
+        var quantidadeEstoque = parseInt(document.getElementById("quantidadeEstoque").value);
+
+        var produto = {
+            nome: nome,
+            descricao: descricao,
+            preco: preco,
+            quantidadeEstoque: quantidadeEstoque
+        };
+
+        fetch('/api/produtos/inserir', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(produto)
+        })
+            .then(response => response.text())
+            .then(message => {
+                alert(message);
+                document.getElementById("produtoForm").reset();
+            })
+            .catch(error => {
+                alert('Erro ao inserir o produto: ' + error);
+            });
+    }
+</script>
+
+</body>
+</html>

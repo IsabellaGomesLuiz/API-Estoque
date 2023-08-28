@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Excluir Produto</title>
+</head>
+<body>
+
+<h2>Excluir Produto</h2>
+
+<form id="excluirProdutoForm">
+  <label for="produtoId">ID do Produto a Excluir:</label><br>
+  <input type="number" id="produtoId" name="produtoId" required><br><br>
+
+  <button type="button" onclick="excluirProduto()">Excluir Produto</button>
+</form>
+
+<script>
+  function excluirProduto() {
+    var produtoId = parseInt(document.getElementById("produtoId").value);
+
+    fetch('/api/produtos/excluir/' + produtoId, {
+      method: 'DELETE'
+    })
+            .then(response => response.text())
+            .then(message => {
+              alert(message);
+              document.getElementById("excluirProdutoForm").reset();
+            })
+            .catch(error => {
+              alert('Erro ao excluir o produto: ' + error);
+            });
+  }
+</script>
+
+</body>
+</html>

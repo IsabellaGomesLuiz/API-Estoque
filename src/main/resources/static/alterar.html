@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Atualizar Produto</title>
+</head>
+<body>
+
+<h2>Atualizar Produto</h2>
+
+<form id="atualizarProdutoForm">
+  <label for="produtoId">ID do Produto:</label><br>
+  <input type="number" id="produtoId" name="produtoId" required><br><br>
+
+  <label for="novoNome">Novo Nome:</label><br>
+  <input type="text" id="novoNome" name="novoNome" required><br><br>
+
+  <label for="novaDescricao">Nova Descrição:</label><br>
+  <textarea id="novaDescricao" name="novaDescricao" required></textarea><br><br>
+
+  <label for="novoPreco">Novo Preço:</label><br>
+  <input type="number" id="novoPreco" name="novoPreco" step="0.01" required><br><br>
+
+  <label for="novaQuantidadeEstoque">Nova Quantidade em Estoque:</label><br>
+  <input type="number" id="novaQuantidadeEstoque" name="novaQuantidadeEstoque" required><br><br>
+
+  <button type="button" onclick="atualizarProduto()">Atualizar Produto</button>
+</form>
+
+<script>
+  function atualizarProduto() {
+    var produtoId = parseInt(document.getElementById("produtoId").value);
+    var novoNome = document.getElementById("novoNome").value;
+    var novaDescricao = document.getElementById("novaDescricao").value;
+    var novoPreco = parseFloat(document.getElementById("novoPreco").value);
+    var novaQuantidadeEstoque = parseInt(document.getElementById("novaQuantidadeEstoque").value);
+
+    var produtoAtualizado = {
+      nome: novoNome,
+      descricao: novaDescricao,
+      preco: novoPreco,
+      quantidadeEstoque: novaQuantidadeEstoque
+    };
+
+    fetch('/api/produtos/atualizar/' + produtoId, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(produtoAtualizado)
+    })
+            .then(response => response.text())
+            .then(message => {
+              alert(message);
+              document.getElementById("atualizarProdutoForm").reset();
+            })
+            .catch(error => {
+              alert('Erro ao atualizar o produto: ' + error);
+            });
+  }
+</script>
+
+</body>
+</html>
