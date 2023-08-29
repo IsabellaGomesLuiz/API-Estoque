@@ -3,7 +3,7 @@
 FROM maven:3:8:3-openjdk-17 as build
 
 COPY . .
-RUN mvn clear package -DskipTests
+RUN mvn clean package -DskipTests
 
 #Package stage
 FROM openjdk:17-jdk-slim
