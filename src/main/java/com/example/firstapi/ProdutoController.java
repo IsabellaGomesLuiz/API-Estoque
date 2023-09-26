@@ -1,5 +1,3 @@
-
-
 package com.example.firstapi;
 
 import org.springframework.beans.factory.annotation.Autowired;

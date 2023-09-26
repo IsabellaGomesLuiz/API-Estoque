@@ -2,6 +2,9 @@ package com.example.firstapi;
 
 import jakarta.persistence.*;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
 @Entity
 public class Produto {
     @Id
